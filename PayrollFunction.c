@@ -151,3 +151,11 @@ double caculate_provincial_tax(double income, double rpp, double union_dues, dou
 	taxable_income = (taxable_income + total_surtax + v2 - tax_reduction - LCP) / pay_periods;
 	return taxable_income < 0 ? 0 : taxable_income; // nếu chịu thuế tỉnh nhỏ hơn 0 thì trả về 0
 }
+// hàm tính tổng các khoản khấu trừ
+double calculate_total_deductions(double rpp, double union_dues, double federal_tax, double provincial_tax, double cpp, double ei) {
+	return federal_tax + provincial_tax + cpp + ei + rpp + union_dues;
+}
+// hàm tính thu nhập ròng
+double calculate_net_income(double income, double total_deductions) {
+	return income - total_deductions;
+}
