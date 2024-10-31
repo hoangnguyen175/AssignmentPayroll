@@ -1,7 +1,7 @@
 #ifndef PAYROLLABSTRACT_H
 #define PAYROLLABSTRACT_H
 
-// khoi tao cac ham abstract
+// khởi tạo các hàm abstract
 double caculate_cpp(double income, int pay_periods, double ytd_cpp);
 
 double caculate_ei(double income, double ytd_ei);

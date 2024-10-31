@@ -39,10 +39,10 @@ int main(int argc, char *argv[]) {
 	double federal_tax = calculate_federal_tax(income, rpp, union_dues, federal_credits,  pay_periods, lssp, cpp, ei, ad);
 	// thuế tỉnh Ontario
 	double provincial_tax = caculate_provincial_tax(income, rpp, union_dues, pay_periods, provincial_credits, dependants, lssp, cpp, ei, ad);
-	// các khoản thuế khấu trừ
-	double total_deductions = federal_tax + provincial_tax + cpp + ei + rpp + union_dues;
+	// tổng các khoản khấu trừ
+	double total_deductions = calculate_total_deductions(rpp, union_dues, federal_tax, provincial_tax, cpp, ei);
 	// thu nhập ròng sau khi trừ thuế
-	double net_income = income - total_deductions;
+	double net_income = calculate_net_income(income, total_deductions);
 
 	// in kết quả 
 	printf("\n Gross Income                 %.2lf\n", income);
