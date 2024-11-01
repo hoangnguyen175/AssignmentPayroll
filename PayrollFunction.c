@@ -159,34 +159,3 @@ double calculate_total_deductions(double rpp, double union_dues, double federal_
 double calculate_net_income(double income, double total_deductions) {
 	return income - total_deductions;
 }
-
-// hàm tính thuế liên bang
-double calculate_federal_tax(double income, double rpp, double union_dues, double federal_credits, double pay_periods, double lssp, double cpp, double ei, double ad) {
-	// tính thu nhập chịu thuế
-	double taxable_income = pay_periods * (income - rpp - union_dues) - ad;
-	// tính thuế liên bang dựa trên các bậc thuế khác nhau
-	if (taxable_income <= FED_TAX_BRACKET1) {
-		taxable_income = taxable_income * FED_TAX_RATE1;
-	} else if (taxable_income <= FED_TAX_BRACKET2) {
-		taxable_income = taxable_income * FED_TAX_RATE2 - 2136;
-	} else if (taxable_income <= FED_TAX_BRACKET3) {
-		taxable_income = taxable_income * FED_TAX_RATE3 - 4983;
-	} else {
-		taxable_income = taxable_income * FED_TAX_RATE4 - 8455;
-	}
-	// tính đóng góp CPP và so sánh giới hạn
-	cpp = cpp * pay_periods;
-	cpp = (cpp >= CPP_LIMIT) ? CPP_LIMIT : cpp;
-	// tính đóng góp EI và so sánh giới hạn
-	ei = ei * pay_periods;
-	ei = (ei >= EI_LIMIT) ? EI_LIMIT : ei;
-	// tính LCP, so sánh max là LCP_LIMIT là 750 lấy nhỏ hơn
-	double LCP = 0.15 * lssp;
-	LCP = (LCP >= LCP_LIMIT) ? LCP_LIMIT : LCP;
-	// tính thuế cuối cùng
-	double tax = taxable_income - 0.16*(federal_credits + cpp + ei);
-	tax = (tax - LCP) / pay_periods;
-	// thuế không âm, nếu âm trả về 0
-	tax = (tax < 0) ? 0 : tax;
-	return tax;
-}
